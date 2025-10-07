@@ -4,7 +4,6 @@ using ServicioUsuarios.Data.DTOs.Alumno;
 using ServicioUsuarios.Data.DAOs.Interfaces;
 using ServicioUsuarios.Validations;
 using ServicioUsuarios.Data.DTOs;
-using ServicioUsuarios.Data.DTOs.RPC;
 
 namespace ServicioUsuarios.Services.Implementation;
 
@@ -97,40 +96,7 @@ public class ServicioAlumno : IServicioAlumno
         _logger.LogInformation($"Contraseña cambiada para el Alumno con la id {alumno.IdAlumno}");
     }
 
-    public async Task<RespuestaRPCDTO> ObtenerListaAlumnosAsync(List<int> idAlumnos)
-    {
-        _logger.LogInformation("Buscando alumnos de lista con ids");
-        var respuesta = _validaciones.VerificarListaIdAlumnos(idAlumnos);
-        if (!respuesta.Success)
-        {
-            return respuesta;
-        }
-        
-        var listaAlumnos = await generarListaDeAlumnosAsync(idAlumnos);
-
-        respuesta.Alumnos = listaAlumnos;
-        _logger.LogInformation("Se obtuvieron los datos de los Alumnos");
-        return respuesta;
-    }
-
     /*
     //Métodos privados
     */
-    
-    private async Task<List<AlumnoEstadisticasDTO>> generarListaDeAlumnosAsync(List<int> idAlumnos)
-    {
-        List<AlumnoEstadisticasDTO> listaAlumnos = new List<AlumnoEstadisticasDTO>();
-        foreach (int idAlumno in idAlumnos)
-        {
-            Alumno alumno = await _validaciones.VerificarExistenciaAlumno(idAlumno);
-            var alumnoInscrito = new AlumnoEstadisticasDTO
-            {
-                IdAlumno = alumno.IdAlumno,
-                NombreCompleto = alumno.NombreCompleto,
-            };
-            listaAlumnos.Add(alumnoInscrito);
-        }
-
-        return listaAlumnos;
-    } 
 }

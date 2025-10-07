@@ -32,6 +32,9 @@ public partial class Instructor
     [StringLength(64)]
     public string? Contrasenia { get; set; }
 
+    [Column("idFotoPerfil")]
+    public int? IdFotoPerfil { get; set; }
+
     [Column("calificacion")]
     public float? Calificacion { get; set; }
 

@@ -9,6 +9,7 @@ namespace ServicioUsuarios.Models;
 [Table("alumno")]
 [Index("IdGradoEstudios", Name = "alumno-grado_idx")]
 [Index("Correo", Name = "correo_UNIQUE", IsUnique = true)]
+[Index("IdFotoPerfil", Name = "idFotoPerfil_UNIQUE", IsUnique = true)]
 [Index("NombreUsuario", Name = "nombreUsuario_UNIQUE", IsUnique = true)]
 public partial class Alumno
 {
@@ -31,6 +32,9 @@ public partial class Alumno
     [Column("contrasenia")]
     [StringLength(64)]
     public string? Contrasenia { get; set; }
+
+    [Column("idFotoPerfil")]
+    public int? IdFotoPerfil { get; set; }
 
     [Column("idGradoEstudios")]
     public int? IdGradoEstudios { get; set; }

@@ -1,6 +1,5 @@
 using ServicioUsuarios.Data.DTOs;
 using ServicioUsuarios.Data.DTOs.Alumno;
-using ServicioUsuarios.Data.DTOs.RPC;
 
 namespace ServicioUsuarios.Services.Interfaces;
 

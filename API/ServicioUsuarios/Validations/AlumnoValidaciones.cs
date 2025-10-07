@@ -1,7 +1,6 @@
 using ServicioUsuarios.Data.DAOs.Interfaces;
 using ServicioUsuarios.Data.DTOs;
 using ServicioUsuarios.Data.DTOs.Alumno;
-using ServicioUsuarios.Data.DTOs.RPC;
 using ServicioUsuarios.Models;
 using ServicioUsuarios.Exceptions;
 
@@ -79,16 +78,6 @@ public class AlumnoValidaciones
         return alumnoObtenido;
     }
 
-    public RespuestaRPCDTO VerificarListaIdAlumnos(List<int> idAlumnos)
-    {
-        var resultado = new RespuestaRPCDTO();
-
-        resultado = verificarDatosListaIdAlumnos(idAlumnos);
-        resultado = verificarIdsDeListaAlumnos(idAlumnos);
-
-        return resultado;
-    }
-
     public void VerificarAutorizacion(HttpContext context)
     {
         if (!context.User.Identity?.IsAuthenticated ?? true)
@@ -154,46 +143,6 @@ public class AlumnoValidaciones
         else if (string.IsNullOrEmpty(cambiarContraseniaDto.ContraseniaActual))
         {
             throw new CampoObligatorioException("La contraseña actual es nula");
-        }
-    }
-
-    private RespuestaRPCDTO verificarDatosListaIdAlumnos(List<int> idAlumnos)
-    {
-        var resultado = new RespuestaRPCDTO
-        {
-            Success = true
-        };
-
-        if (idAlumnos == null)
-        {
-            resultado.Success = false;
-            resultado.Error = new ErrorDTO
-            {
-                Tipo = "CampoObligatorioException",
-                Mensaje = "Excepción en ServicioUsuarios: La lista de idAlumnos es nula"
-            };
-        }
-
-        return resultado;
-    }
-
-    private RespuestaRPCDTO verificarIdsDeListaAlumnos(List<int> idAlumnos)
-    {
-        try
-        {
-            foreach (int idAlumno in idAlumnos)
-            {
-                verificarIdUsuario(idAlumno);
-            }
-
-            return new RespuestaRPCDTO
-            {
-                Success = true
-            };
-        }
-        catch (Exception ex)
-        {
-            return DetectorExcepciones.detectarExcepcion(ex);
         }
     }
 
