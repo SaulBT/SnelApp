@@ -8,7 +8,7 @@ namespace ServicioUsuarios.Models;
 
 [Table("instructor")]
 [Index("Correo", Name = "correo_UNIQUE", IsUnique = true)]
-[Index("IdGradoProfesional", Name = "instructor-grado_idx")]
+[Index("IdGradoProfesional", Name = "docente-grado_idx")]
 [Index("NombreUsuario", Name = "nombreUsuario_UNIQUE", IsUnique = true)]
 public partial class Instructor
 {
@@ -32,10 +32,13 @@ public partial class Instructor
     [StringLength(64)]
     public string? Contrasenia { get; set; }
 
+    [Column("calificacion")]
+    public float? Calificacion { get; set; }
+
     [Column("idGradoProfesional")]
     public int? IdGradoProfesional { get; set; }
 
     [ForeignKey("IdGradoProfesional")]
-    [InverseProperty("Docente")]
+    [InverseProperty("Instructor")]
     public virtual GradoProfesional? IdGradoProfesionalNavigation { get; set; }
 }

@@ -181,27 +181,6 @@ app.MapPut("/alumnos/{idAlumno}/contrasenia", async (CambiarContraseniaDTO cambi
 .RequireAuthorization()
 .WithOpenApi();
 
-app.MapGet("/alumnos/{idAlumno}/estadisticas", async (HttpContext context, int idAlumno, IServicioAlumno servicio) =>
-{
-    var estadisticas = await servicio.ObtenerEstadisticasPerfilAlumnoAsync(context, idAlumno);
-    return Results.Ok(estadisticas);
-})
-.WithName("Obtener perfil de Alumno")
-.WithTags("Alumnos")
-.WithSummary("Obtener las estadísticas del Alumno")
-.WithDescription(
-    "Obtiene los siguientes datos de un Alumno:" +
-    "\n - Datos de la cuenta del Alumno" +
-    "\n - Clases del Alumno" +
-    "\n - Tareas y calificación de cada Alumno")
-.Produces<EstadisticasPerfilDTO>(200)
-.Produces(400)
-.Produces(401)
-.Produces(404)
-.Produces(409)
-.RequireAuthorization()
-.WithOpenApi();
-
 //DocenteService
 app.MapPost("/docentes", async (RegistrarInstructorDTO docenteNuevoDto, IServicioInstructor servicio) =>
 {

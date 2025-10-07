@@ -14,11 +14,11 @@ public partial class UsuariosDbContext : DbContext
 
     public virtual DbSet<Alumno> Alumno { get; set; }
 
-    public virtual DbSet<Instructor> Instructor { get; set; }
-
     public virtual DbSet<GradoEstudios> GradoEstudios { get; set; }
 
     public virtual DbSet<GradoProfesional> GradoProfesional { get; set; }
+
+    public virtual DbSet<Instructor> Instructor { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -33,13 +33,6 @@ public partial class UsuariosDbContext : DbContext
             entity.HasOne(d => d.IdGradoEstudiosNavigation).WithMany(p => p.Alumno).HasConstraintName("alumno-grado");
         });
 
-        modelBuilder.Entity<Instructor>(entity =>
-        {
-            entity.HasKey(e => e.IdInstructor).HasName("PRIMARY");
-
-            entity.HasOne(d => d.IdGradoProfesionalNavigation).WithMany(p => p.Instructor).HasConstraintName("docente-grado");
-        });
-
         modelBuilder.Entity<GradoEstudios>(entity =>
         {
             entity.HasKey(e => e.IdGradoEstudios).HasName("PRIMARY");
@@ -48,6 +41,13 @@ public partial class UsuariosDbContext : DbContext
         modelBuilder.Entity<GradoProfesional>(entity =>
         {
             entity.HasKey(e => e.IdGradoProfesional).HasName("PRIMARY");
+        });
+
+        modelBuilder.Entity<Instructor>(entity =>
+        {
+            entity.HasKey(e => e.IdInstructor).HasName("PRIMARY");
+
+            entity.HasOne(d => d.IdGradoProfesionalNavigation).WithMany(p => p.Instructor).HasConstraintName("instructor-grado");
         });
 
         OnModelCreatingPartial(modelBuilder);

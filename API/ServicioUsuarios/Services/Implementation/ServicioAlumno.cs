@@ -2,7 +2,6 @@ using ServicioUsuarios.Models;
 using ServicioUsuarios.Services.Interfaces;
 using ServicioUsuarios.Data.DTOs.Alumno;
 using ServicioUsuarios.Data.DAOs.Interfaces;
-using ServicioUsuarios.Config;
 using ServicioUsuarios.Validations;
 using ServicioUsuarios.Data.DTOs;
 using ServicioUsuarios.Data.DTOs.RPC;
@@ -12,14 +11,12 @@ namespace ServicioUsuarios.Services.Implementation;
 public class ServicioAlumno : IServicioAlumno
 {
     private readonly IAlumnoDAO _alumnoDAO;
-    private readonly RpcClientRabbitMQ _rpcClient;
     private readonly ILogger<ServicioAlumno> _logger;
     private readonly AlumnoValidaciones _validaciones;
 
-    public ServicioAlumno(IAlumnoDAO alumnoDAO, RpcClientRabbitMQ rpcClient, ILogger<ServicioAlumno> logger, AlumnoValidaciones validaciones)
+    public ServicioAlumno(IAlumnoDAO alumnoDAO, ILogger<ServicioAlumno> logger, AlumnoValidaciones validaciones)
     {
         _alumnoDAO = alumnoDAO;
-        _rpcClient = rpcClient;
         _logger = logger;
         _validaciones = validaciones;
     }
@@ -116,64 +113,9 @@ public class ServicioAlumno : IServicioAlumno
         return respuesta;
     }
 
-    public async Task<EstadisticasPerfilDTO> ObtenerEstadisticasPerfilAlumnoAsync(HttpContext httpContext, int idAlumno)
-    {
-        _logger.LogInformation("Recopilando datos para estadísticas del perfil de Alumno");
-        _validaciones.VerificarObtencionDeEstadisticasDeAlumno(httpContext, idAlumno);
-
-        var datosPerfil = await ObtenerAlumnoPorIdAsync(idAlumno);
-        
-        string mensajeJson = crearMensajeRPC("obtenerClasesTareasYRespuesta", idAlumno);
-        var resultadoClasesTareasRespuesta = await enviarMensajeRPCAsync(mensajeJson, "cola_clases");
-
-        var estadistica = new EstadisticasPerfilDTO
-        {
-            IdAlumno = idAlumno,
-            NombreUsuario = datosPerfil.NombreUsuario,
-            NombreCompleto = datosPerfil.NombreCompleto,
-            Correo = datosPerfil.CorreoElectronico,
-            idGradoEstudios = (int)datosPerfil.IdGradoEstudios,
-            Clases = resultadoClasesTareasRespuesta.Clases
-        };
-
-        _logger.LogInformation($"Estadísticas del Alumno con id {idAlumno} generadas");
-        return estadistica;
-    }
-
     /*
     //Métodos privados
     */
-
-    private string crearMensajeRPC(string accion, int idAlumno)
-    {
-        SolicitudRPCDTO solicitud = new SolicitudRPCDTO
-        {
-            Accion = accion,
-            IdAlumno = idAlumno
-        };
-        return System.Text.Json.JsonSerializer.Serialize(solicitud);
-    }
-
-    private async Task<RespuestaRPCDTO> enviarMensajeRPCAsync(string mensajeJson, string cola)
-    {
-        string respuestaJson = await _rpcClient.CallAsync(cola, mensajeJson);
-        var respuesta = System.Text.Json.JsonSerializer.Deserialize<RespuestaRPCDTO>(respuestaJson);
-
-        if (respuesta == null)
-        {
-            throw new Exception("No hay respuesta");
-        }
-        else if (!respuesta.Success)
-        {
-            if (respuesta.Error == null)
-            {
-                throw new InvalidOperationException("No hay error");
-            }
-            throw LanzarExcepciones.lanzarExcepcion(respuesta.Error.Tipo, respuesta.Error.Mensaje);
-        }
-
-        return respuesta;
-    }
     
     private async Task<List<AlumnoEstadisticasDTO>> generarListaDeAlumnosAsync(List<int> idAlumnos)
     {

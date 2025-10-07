@@ -11,6 +11,4 @@ public interface IServicioAlumno
     Task EliminarAsync(HttpContext context, int idAlumno);
     Task<AlumnoDTO?> ObtenerAlumnoPorIdAsync(int idAlumno);
     Task CambiarContraseniaAsync(CambiarContraseniaDTO cambiarContraseniaDto, int idAlumno, HttpContext context);
-    Task<RespuestaRPCDTO> ObtenerListaAlumnosAsync(List<int> idAlumnos);
-    Task<EstadisticasPerfilDTO> ObtenerEstadisticasPerfilAlumnoAsync(HttpContext httpContext, int idAlumno);
 }
