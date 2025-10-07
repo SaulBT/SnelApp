@@ -8,4 +8,5 @@ public class AlumnoDTO
     public string NombreUsuario { get; set; } = string.Empty;
     public string CorreoElectronico { get; set; } = string.Empty;
     public int IdGradoEstudios { get; set; } = 0;
+    public int? IdFotoPerfil { get; set; } = null;
 }

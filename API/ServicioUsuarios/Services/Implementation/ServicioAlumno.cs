@@ -46,6 +46,7 @@ public class ServicioAlumno : IServicioAlumno
         alumno.NombreCompleto = actualizarAlumnoDto.NombreCompleto;
         alumno.NombreUsuario = actualizarAlumnoDto.NombreUsuario;
         alumno.IdGradoEstudios = actualizarAlumnoDto.IdGradoEstudios;
+        alumno.IdFotoPerfil = actualizarAlumnoDto.IdFotoPerfil;
         await _alumnoDAO.ActualizarAsync(alumno);
         var retornoAlumno = new AlumnoDTO
         {
@@ -53,7 +54,8 @@ public class ServicioAlumno : IServicioAlumno
             NombreCompleto = actualizarAlumnoDto.NombreCompleto,
             NombreUsuario = actualizarAlumnoDto.NombreUsuario,
             CorreoElectronico = alumno.Correo,
-            IdGradoEstudios = actualizarAlumnoDto.IdGradoEstudios
+            IdGradoEstudios = actualizarAlumnoDto.IdGradoEstudios,
+            IdFotoPerfil = actualizarAlumnoDto.IdFotoPerfil
         };
         _logger.LogInformation($"Alumno actualizado con la id {retornoAlumno.IdAlumno}");
         return retornoAlumno;

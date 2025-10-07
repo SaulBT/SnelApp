@@ -46,6 +46,7 @@ public class SerivicioInstructor : IServicioInstructor
         instructor.NombreCompleto = actualizarInstructorDto.NombreCompleto;
         instructor.NombreUsuario = actualizarInstructorDto.NombreUsuario;
         instructor.IdGradoProfesional = actualizarInstructorDto.IdGradoProfesional;
+        instructor.IdFotoPerfil = actualizarInstructorDto.IdFotoPerfil;
         await _instructorDAO.ActualizarAsync(instructor);
 
         var retornoInstructor = new InstructorDTO
@@ -54,7 +55,8 @@ public class SerivicioInstructor : IServicioInstructor
             NombreCompleto = instructor.NombreCompleto,
             NombreUsuario = instructor.NombreUsuario,
             CorreoElectronico = instructor.Correo,
-            IdGradoProfesional = (int)instructor.IdGradoProfesional
+            IdGradoProfesional = (int)instructor.IdGradoProfesional,
+            IdFotoPerfil = instructor.IdFotoPerfil
         };
         _logger.LogInformation($"Se actualizó al Instructor con la id {retornoInstructor.idInstructor}");
         return retornoInstructor;
