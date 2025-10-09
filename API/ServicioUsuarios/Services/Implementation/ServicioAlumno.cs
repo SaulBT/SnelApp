@@ -81,7 +81,8 @@ public class ServicioAlumno : IServicioAlumno
             NombreCompleto = alumnoObtenido.NombreCompleto,
             NombreUsuario = alumnoObtenido.NombreUsuario,
             CorreoElectronico = alumnoObtenido.Correo,
-            IdGradoEstudios = (int)alumnoObtenido.IdGradoEstudios
+            IdGradoEstudios = (int)alumnoObtenido.IdGradoEstudios,
+            IdFotoPerfil = alumnoObtenido.IdFotoPerfil
         };
 
         _logger.LogInformation("Alumno encontrado");

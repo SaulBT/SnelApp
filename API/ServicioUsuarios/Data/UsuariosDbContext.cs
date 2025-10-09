@@ -30,7 +30,9 @@ public partial class UsuariosDbContext : DbContext
         {
             entity.HasKey(e => e.IdAlumno).HasName("PRIMARY");
 
-            entity.HasOne(d => d.IdGradoEstudiosNavigation).WithMany(p => p.Alumno).HasConstraintName("alumno-grado");
+            entity.HasOne(d => d.IdGradoEstudiosNavigation).WithMany(p => p.Alumno)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("alumno-grado");
         });
 
         modelBuilder.Entity<GradoEstudios>(entity =>
@@ -47,7 +49,9 @@ public partial class UsuariosDbContext : DbContext
         {
             entity.HasKey(e => e.IdInstructor).HasName("PRIMARY");
 
-            entity.HasOne(d => d.IdGradoProfesionalNavigation).WithMany(p => p.Instructor).HasConstraintName("instructor-grado");
+            entity.HasOne(d => d.IdGradoProfesionalNavigation).WithMany(p => p.Instructor)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("instructor-grado");
         });
 
         OnModelCreatingPartial(modelBuilder);

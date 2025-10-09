@@ -86,8 +86,8 @@ app.MapPost("/alumnos", async (RegistrarAlumnoDTO alumnoNuevoDto, IServicioAlumn
 .WithSummary("Registrar un nuevo Alumno en el sistema")
 .WithDescription(
     "Crea un Alumno con los datos: " +
-    "\n - Nombre de completo." +
-    "\n - Nombre usuario." +
+    "\n - Nombre completo." +
+    "\n - Nombre de usuario." +
     "\n - Correo electrónico." +
     "\n - Contraseña." +
     "\n - Id del último grado de estudios cursado.")

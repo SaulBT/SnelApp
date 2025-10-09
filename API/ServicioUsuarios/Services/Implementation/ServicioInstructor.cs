@@ -31,7 +31,7 @@ public class SerivicioInstructor : IServicioInstructor
             NombreUsuario = registrarInstructorDto.NombreUsuario,
             Contrasenia = registrarInstructorDto.Contrasenia,
             Correo = registrarInstructorDto.CorreoElectronico,
-            IdGradoProfesional = registrarInstructorDto.IdGradoProfesional
+            IdGradoProfesional = registrarInstructorDto.IdGradoProfesional,
         };
         await _instructorDAO.AgregarInstructorAsync(nuevoInstructor);
 

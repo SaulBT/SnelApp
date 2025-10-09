@@ -18,19 +18,22 @@ public partial class Instructor
 
     [Column("nombreCompleto")]
     [StringLength(135)]
-    public string? NombreCompleto { get; set; }
+    public string NombreCompleto { get; set; } = null!;
 
     [Column("nombreUsuario")]
     [StringLength(45)]
-    public string? NombreUsuario { get; set; }
+    public string NombreUsuario { get; set; } = null!;
 
     [Column("correo")]
     [StringLength(45)]
-    public string? Correo { get; set; }
+    public string Correo { get; set; } = null!;
 
     [Column("contrasenia")]
     [StringLength(64)]
-    public string? Contrasenia { get; set; }
+    public string Contrasenia { get; set; } = null!;
+
+    [Column("idGradoProfesional")]
+    public int IdGradoProfesional { get; set; }
 
     [Column("idFotoPerfil")]
     public int? IdFotoPerfil { get; set; }
@@ -38,10 +41,7 @@ public partial class Instructor
     [Column("calificacion")]
     public float? Calificacion { get; set; }
 
-    [Column("idGradoProfesional")]
-    public int? IdGradoProfesional { get; set; }
-
     [ForeignKey("IdGradoProfesional")]
     [InverseProperty("Instructor")]
-    public virtual GradoProfesional? IdGradoProfesionalNavigation { get; set; }
+    public virtual GradoProfesional IdGradoProfesionalNavigation { get; set; } = null!;
 }
