@@ -1,0 +1,9 @@
+dotnet add package Pomelo.EntityFrameworkCore.MySql
+dotnet add package Microsoft.EntityFrameworkCore.Design
+dotnet add package Microsoft.AspNetCore.OpenApi
+dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
+dotnet add package Swashbuckle.AspNetCore
+
+dotnet ef dbcontext scaffold "server=localhost;port=3306;user=XX_snelapp;password=XX123;database=XX_bd_snelapp" Pomelo.EntityFrameworkCore.MySql --output-dir Models --context-dir Data --context XXDbContext --no-onconfiguring --no-pluralize --data-annotations -f
+
+Cambiar XX por el nombre del servicio.
