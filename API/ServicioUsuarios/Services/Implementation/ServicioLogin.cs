@@ -31,9 +31,9 @@ public class ServicioLogin : IServicioLogin
             idUsuario = usuario.IdAlumno;
             nombreUsuario = usuario.NombreUsuario;
         }
-        else if (usuarioDto.TipoUsuario == "docente")
+        else if (usuarioDto.TipoUsuario == "instructor")
         {
-            var usuario = await _validaciones.verificarCredencialesDocenteAsync(usuarioDto);
+            var usuario = await _validaciones.verificarCredencialesInstructorAsync(usuarioDto);
             idUsuario = usuario.IdInstructor;
             nombreUsuario = usuario.NombreUsuario;
         }

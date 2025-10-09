@@ -59,12 +59,12 @@ public class LoginValidaciones
         return alumno;
     }
 
-    public async Task<Instructor> verificarCredencialesDocenteAsync(IniciarSesionDTO usuarioDto)
+    public async Task<Instructor> verificarCredencialesInstructorAsync(IniciarSesionDTO usuarioDto)
     {
         var docente = await _docenteDAO.ObtenerInstructorPorNombreUsuarioOCorreoAsync(usuarioDto.NombreUsuarioOCorreo);
         if (docente == null)
         {
-            throw new UnauthorizedAccessException("No se encontró al docente.");
+            throw new UnauthorizedAccessException("No se encontró al instructor.");
         }
         else if (docente.Contrasenia != usuarioDto.Contrasenia)
         {
