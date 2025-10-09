@@ -139,7 +139,7 @@ app.MapPut("/alumnos/{idAlumno}", async (HttpContext context, int idAlumno, Actu
     "\n - Nombre completo" +
     "\n - Nombre de usuario" +
     "\n - Id del último grado de estudios" +
-    "\n - Id de la nueva foto de perfil" +
+    "\n - Id de la nueva foto de perfil." +
     "\nY devuelve los siguientes datos:" +
     "\n - Id del Alumno" +
     "\n - Nombre completo" +
@@ -240,22 +240,23 @@ app.MapGet("/instructores/{idInstructor}", async (int idInstructor, IServicioIns
 .Produces(409)
 .WithOpenApi();
 
-app.MapPut("/docentes/{idDocente}", async (HttpContext context, int idDocente, ActualizarInstructorDTO docenteActualizadoDTO, IServicioInstructor servicio) =>
+//Actualizar instructor
+app.MapPut("/instructores/{idInstructores}", async (HttpContext context, int idInstructor, ActualizarInstructorDTO instructorActualizadoDTO, IServicioInstructor servicio) =>
 {
-    await servicio.ActualizarAsync(context, idDocente, docenteActualizadoDTO);
+    await servicio.ActualizarAsync(context, idInstructor, instructorActualizadoDTO);
     return Results.Accepted();
 })
-.WithName("Actualizar Docente")
-.WithTags("Docentes")
-.WithSummary("Actualiza un Docente con la id")
+.WithName("Actualizar Instructor")
+.WithTags("Instructores")
+.WithSummary("Actualiza un Instructor con la id")
 .WithDescription(
-    "Actualiza un Docente recibiendo lo siguientes datos:" +
-    "\n - Id del Docente" +
+    "Actualiza un Instructor recibiendo lo siguientes datos:" +
+    "\n - Id del Instructor" +
     "\n - Nombre completo" +
     "\n - Nombre de usuario" +
     "\n - Id del último grado de estudios cursado." +
     "\nY devuelve los siguientes datos:" +
-    "\n - Id del Docente" +
+    "\n - Id del Instructor" +
     "\n - Nombre completo" +
     "\n - Nombre del usuario" +
     "\n - Correo electrónico" +

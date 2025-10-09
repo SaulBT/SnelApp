@@ -81,7 +81,8 @@ public class SerivicioInstructor : IServicioInstructor
             NombreCompleto = instructor.NombreCompleto,
             NombreUsuario = instructor.NombreUsuario,
             CorreoElectronico = instructor.Correo,
-            IdGradoProfesional = (int)instructor.IdGradoProfesional
+            IdGradoProfesional = (int)instructor.IdGradoProfesional,
+            IdFotoPerfil = instructor.IdFotoPerfil
         };
         _logger.LogInformation($"Instructor encontrado con la id: {retornoInstructor.idInstructor}");
         return retornoInstructor;

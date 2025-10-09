@@ -24,7 +24,6 @@ public class InstructorValidaciones
 
     public async Task<Instructor> VerificarActualizacionDeInstructorAsync(HttpContext httpContext, int idInstructor, ActualizarInstructorDTO instructorDto)
     {
-        verificarAutorizacion(httpContext);
         var idInstructorContexto = int.Parse(httpContext.User.FindFirst("idUsuario")!.Value);
         verificarIgualdadId(idInstructor, idInstructorContexto);
         verificarParametrosInstructorActualizacion(instructorDto);

@@ -24,7 +24,6 @@ public class AlumnoValidaciones
 
     public async Task<Alumno> VerificarActualizacionDeAlumnoAsync(HttpContext httpContext, int idAlumno, ActualizarAlumnoDTO alumnoDto)
     {
-        //VerificarAutorizacion(httpContext);
         verificarIdUsuario(idAlumno);
         var idAlumnoContext = int.Parse(httpContext.User.FindFirst("idUsuario")!.Value);
         verificarIgualdadId(idAlumno, idAlumnoContext);
@@ -35,7 +34,6 @@ public class AlumnoValidaciones
 
     public async Task<Alumno> VerificarEliminarAlumnoAsync(HttpContext httpContext, int idAlumno)
     {
-        //VerificarAutorizacion(httpContext);
         var idAlumnoContext = int.Parse(httpContext.User.FindFirst("idUsuario")!.Value);
         verificarIgualdadId(idAlumnoContext, idAlumno);
         verificarIdUsuario(idAlumno);
@@ -52,7 +50,6 @@ public class AlumnoValidaciones
     public async Task<Alumno> VerificarCambioContraseniaAsync(CambiarContraseniaDTO cambiarContraseniaDto, int idAlumno, HttpContext httpContext)
     {
         verificarParametrosCambiarContrasenia(cambiarContraseniaDto);
-        //VerificarAutorizacion(httpContext);
         var idAlumnoContext = int.Parse(httpContext.User.FindFirst("idUsuario")!.Value);
         verificarIgualdadId(idAlumnoContext, idAlumno);
         verificarIdUsuario(idAlumno);
@@ -60,12 +57,6 @@ public class AlumnoValidaciones
         verificarContraseniaActual(alumno, cambiarContraseniaDto.ContraseniaActual);
 
         return alumno;
-    }
-
-    public void VerificarObtencionDeEstadisticasDeAlumno(HttpContext httpContext, int idAlumno)
-    {
-        VerificarAutorizacion(httpContext);
-        verificarIdUsuario(idAlumno);
     }
 
     public async Task<Alumno> VerificarExistenciaAlumno(int idAlumno)
@@ -76,14 +67,6 @@ public class AlumnoValidaciones
             throw new RecursoNoEncontradoException($"El Alumno con la id {idAlumno} no existe.");
         }
         return alumnoObtenido;
-    }
-
-    public void VerificarAutorizacion(HttpContext context)
-    {
-        if (!context.User.Identity?.IsAuthenticated ?? true)
-        {
-            throw new UnauthorizedAccessException("El usuario no está autenticado.");
-        }
     }
 
     private void verificarIdUsuario(int idUsuario)
