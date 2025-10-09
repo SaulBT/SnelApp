@@ -34,7 +34,6 @@ public class InstructorValidaciones
 
     public async Task<Instructor> VerificarEliminacionDeInstructorAsync(HttpContext httpContext, int idInstructor)
     {
-        verificarAutorizacion(httpContext);
         var idInstructorContexto = int.Parse(httpContext.User.FindFirst("idUsuario")!.Value);
         verificarIdValida(idInstructor);
         verificarIdValida(idInstructorContexto);
@@ -51,7 +50,6 @@ public class InstructorValidaciones
     public async Task<Instructor> VerificarCambioDeContraseniaAsync(CambiarContraseniaDTO cambiarContraseniaDTO, int idInstructor, HttpContext httpContext)
     {
         verificarParametrosCambiarContrasenia(cambiarContraseniaDTO);
-        verificarAutorizacion(httpContext);
         var idInstructorContexto = int.Parse(httpContext.User.FindFirst("idUsuario")!.Value);
         verificarIdValida(idInstructorContexto);
         verificarIdValida(idInstructor);
@@ -163,14 +161,6 @@ public class InstructorValidaciones
         if (instructorExistente != null)
         {
             throw new RecursoYaExistenteException($"'{correo}' ya está en uso.");
-        }
-    }
-
-    private void verificarAutorizacion(HttpContext context)
-    {
-        if (!context.User.Identity?.IsAuthenticated ?? true)
-        {
-            throw new UnauthorizedAccessException("El usuario no está autenticado.");
         }
     }
 
