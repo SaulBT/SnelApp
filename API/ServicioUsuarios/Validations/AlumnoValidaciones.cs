@@ -24,7 +24,7 @@ public class AlumnoValidaciones
 
     public async Task<Alumno> VerificarActualizacionDeAlumnoAsync(HttpContext httpContext, int idAlumno, ActualizarAlumnoDTO alumnoDto)
     {
-        VerificarAutorizacion(httpContext);
+        //VerificarAutorizacion(httpContext);
         verificarIdUsuario(idAlumno);
         var idAlumnoContext = int.Parse(httpContext.User.FindFirst("idUsuario")!.Value);
         verificarIgualdadId(idAlumno, idAlumnoContext);
@@ -35,7 +35,7 @@ public class AlumnoValidaciones
 
     public async Task<Alumno> VerificarEliminarAlumnoAsync(HttpContext httpContext, int idAlumno)
     {
-        VerificarAutorizacion(httpContext);
+        //VerificarAutorizacion(httpContext);
         var idAlumnoContext = int.Parse(httpContext.User.FindFirst("idUsuario")!.Value);
         verificarIgualdadId(idAlumnoContext, idAlumno);
         verificarIdUsuario(idAlumno);
@@ -52,7 +52,7 @@ public class AlumnoValidaciones
     public async Task<Alumno> VerificarCambioContraseniaAsync(CambiarContraseniaDTO cambiarContraseniaDto, int idAlumno, HttpContext httpContext)
     {
         verificarParametrosCambiarContrasenia(cambiarContraseniaDto);
-        VerificarAutorizacion(httpContext);
+        //VerificarAutorizacion(httpContext);
         var idAlumnoContext = int.Parse(httpContext.User.FindFirst("idUsuario")!.Value);
         verificarIgualdadId(idAlumnoContext, idAlumno);
         verificarIdUsuario(idAlumno);

@@ -75,7 +75,10 @@ if (app.Environment.IsDevelopment())
     app.UseAuthentication();
 }
 
-//ServicioAlumno
+/*
+ * ServicioAlumno
+*/
+//Registrar alumno
 app.MapPost("/alumnos", async (RegistrarAlumnoDTO alumnoNuevoDto, IServicioAlumno servicio) =>
 {
     await servicio.RegistrarAsync(alumnoNuevoDto);
@@ -97,6 +100,7 @@ app.MapPost("/alumnos", async (RegistrarAlumnoDTO alumnoNuevoDto, IServicioAlumn
 .Produces(409)
 .WithOpenApi();
 
+//Obtener alumno por id
 app.MapGet("/alumnos/{idAlumno}", async (int idAlumno, IServicioAlumno servicio) =>
 {
     var alumno = await servicio.ObtenerAlumnoPorIdAsync(idAlumno);
@@ -108,10 +112,11 @@ app.MapGet("/alumnos/{idAlumno}", async (int idAlumno, IServicioAlumno servicio)
 .WithDescription(
     "Obtiene un Alumno con los datos: " +
     "\n - Id del Alumno" +
-    "\n - Nombre de completo." +
-    "\n - Nombre usuario." +
+    "\n - Nombre completo." +
+    "\n - Nombre de usuario." +
     "\n - Correo electrónico." +
     "\n - Id del último grado de estudios cursado." +
+    "\n - Id de la foto de perfil." +
     "\nCon la id del Alumno.")
 .Produces<AlumnoDTO>(200)
 .Produces(400)
@@ -119,10 +124,11 @@ app.MapGet("/alumnos/{idAlumno}", async (int idAlumno, IServicioAlumno servicio)
 .Produces(409)
 .WithOpenApi();
 
+//Actualizar alumno
 app.MapPut("/alumnos/{idAlumno}", async (HttpContext context, int idAlumno, ActualizarAlumnoDTO alumnoActualizadoDTO, IServicioAlumno servicio) =>
 {
-    await servicio.ActualizarAsync(context, idAlumno, alumnoActualizadoDTO);
-    return Results.Accepted();
+    var alumno = await servicio.ActualizarAsync(context, idAlumno, alumnoActualizadoDTO);
+    return Results.Accepted("/alumnos/{idAlumno}",alumno);
 })
 .WithName("Actualizar Alumno")
 .WithTags("Alumnos")
@@ -133,12 +139,14 @@ app.MapPut("/alumnos/{idAlumno}", async (HttpContext context, int idAlumno, Actu
     "\n - Nombre completo" +
     "\n - Nombre de usuario" +
     "\n - Id del último grado de estudios" +
+    "\n - Id de la nueva foto de perfil" +
     "\nY devuelve los siguientes datos:" +
     "\n - Id del Alumno" +
     "\n - Nombre completo" +
     "\n - Nombre del usuario" +
     "\n - Correo electrónico" +
-    "\n - Id del último grado de estudios")
+    "\n - Id del último grado de estudios" +
+    "\n - Id de la nueva foto de perfil.")
 .Accepts<ActualizarAlumnoDTO>("application/json")
 .Produces(204)
 .Produces(400)
@@ -148,6 +156,7 @@ app.MapPut("/alumnos/{idAlumno}", async (HttpContext context, int idAlumno, Actu
 .RequireAuthorization()
 .WithOpenApi();
 
+//Eliminar alumno
 app.MapDelete("/alumnos/{idAlumno}", async (HttpContext context, int idAlumno, IServicioAlumno servicio) =>
 {
     await servicio.EliminarAsync(context, idAlumno);
@@ -164,6 +173,7 @@ app.MapDelete("/alumnos/{idAlumno}", async (HttpContext context, int idAlumno, I
 .RequireAuthorization()
 .WithOpenApi();
 
+//Cambiar contrasenia de alumno
 app.MapPut("/alumnos/{idAlumno}/contrasenia", async (CambiarContraseniaDTO cambiarContraseniaDto, int idAlumno, IServicioAlumno servicio, HttpContext context) =>
 {
     await servicio.CambiarContraseniaAsync(cambiarContraseniaDto, idAlumno, context);
@@ -181,17 +191,20 @@ app.MapPut("/alumnos/{idAlumno}/contrasenia", async (CambiarContraseniaDTO cambi
 .RequireAuthorization()
 .WithOpenApi();
 
-//DocenteService
-app.MapPost("/docentes", async (RegistrarInstructorDTO docenteNuevoDto, IServicioInstructor servicio) =>
+/*
+ * ServicioInstructor
+*/
+//Registrar instructor
+app.MapPost("/instructores", async (RegistrarInstructorDTO instructorNuevoDto, IServicioInstructor servicio) =>
 {
-    await servicio.RegistrarAsync(docenteNuevoDto);
+    await servicio.RegistrarAsync(instructorNuevoDto);
     return Results.Created();
 })
-.WithName("Registrar Docente")
-.WithTags("Docentes")
-.WithSummary("Registrar un nuevo Docente en el sistema")
+.WithName("Registrar Instructor")
+.WithTags("Instructores")
+.WithSummary("Registrar un nuevo Instructor en el sistema")
 .WithDescription(
-    "Crea un Docente con los datos: " +
+    "Crea un Instructor con los datos: " +
     "\n - Nombre completo." +
     "\n - Nombre usuario." +
     "\n - Correo electrónico." +
@@ -203,22 +216,24 @@ app.MapPost("/docentes", async (RegistrarInstructorDTO docenteNuevoDto, IServici
 .Produces(409)
 .WithOpenApi();
 
-app.MapGet("/docentes/{idDocente}", async (int idDocente, IServicioInstructor servicio) =>
+//Obtener instructor por id
+app.MapGet("/instructores/{idInstructor}", async (int idInstructor, IServicioInstructor servicio) =>
 {
-    var docente = await servicio.ObtenerInstructorPorIdAsync(idDocente);
-    return Results.Ok(docente);
+    var instructor = await servicio.ObtenerInstructorPorIdAsync(idInstructor);
+    return Results.Ok(instructor);
 })
-.WithName("Obtener Docente por id")
-.WithTags("Docentes")
-.WithSummary("Obtiene un Docente por medio de su id")
+.WithName("Obtener Instructor por id")
+.WithTags("Instructores")
+.WithSummary("Obtiene un Instructor por medio de su id")
 .WithDescription(
-    "Obtiene un Docente con los datos: " +
-    "\n - Id del Docente" +
+    "Obtiene un Instructor con los datos: " +
+    "\n - Id del Instructor" +
     "\n - Nombre completo." +
     "\n - Nombre usuario." +
     "\n - Correo electrónico." +
     "\n - Id del último grado de estudios cursado." +
-    "\nCon la id del Docente.")
+    "\n - Id de la foto de perfil." +
+    "\nCon la id del Instructor.")
 .Produces<InstructorDTO>(200)
 .Produces(400)
 .Produces(404)

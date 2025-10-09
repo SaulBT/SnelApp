@@ -98,8 +98,4 @@ public class ServicioAlumno : IServicioAlumno
         await _alumnoDAO.ActualizarAsync(alumno);
         _logger.LogInformation($"Contraseña cambiada para el Alumno con la id {alumno.IdAlumno}");
     }
-
-    /*
-    //Métodos privados
-    */
 }
