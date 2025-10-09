@@ -141,3 +141,16 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2025-10-08 23:33:13
+
+-- Insertar datos
+INSERT INTO `grado_estudios` VALUES (1,'Primaria'),(2,'Secundaria'),(3,'Bachillerato'),(4,'Universidad'),(5,'Maestría'),(6,'Doctorado');
+INSERT INTO `grado_profesional` VALUES (1,'Licenciatura'),(2,'Maestría'),(3,'Doctorado');
+
+-- Crear usuario
+CREATE USER 'usuarios_snelapp'@'%' IDENTIFIED BY 'usuario123';
+
+-- Otorgar privilegios sobre la base de datos
+GRANT ALL PRIVILEGES ON usuarios_bd_snelapp.* TO 'usuarios_snelapp'@'%';
+
+-- Aplicar cambios de privilegios
+FLUSH PRIVILEGES;
