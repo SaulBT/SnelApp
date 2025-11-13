@@ -22,7 +22,7 @@ public class LoginValidaciones
         {
             throw new CampoObligatorioException("Tipo de usuario");
         }
-        else if (iniciarSesionDto.TipoUsuario != "alumno" && iniciarSesionDto.TipoUsuario != "docente")
+        else if (iniciarSesionDto.TipoUsuario != "alumno" && iniciarSesionDto.TipoUsuario != "instructor")
         {
             throw new TipoUsuarioInvalidoException($"El tipo de usuario es inválido: {iniciarSesionDto.TipoUsuario}");
         }
