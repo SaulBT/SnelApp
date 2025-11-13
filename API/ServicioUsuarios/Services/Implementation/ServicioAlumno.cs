@@ -64,7 +64,7 @@ public class ServicioAlumno : IServicioAlumno
     public async Task EliminarAsync(HttpContext httpContext, int idAlumno)
     {
         _logger.LogInformation("Eliminando a Alumno");
-        var alumno = await _validaciones.VerificarEliminarAlumnoAsync(httpContext, idAlumno);
+        var alumno = await _validaciones.VerificarEliminacionDeAlumnoAsync(httpContext, idAlumno);
 
         await _alumnoDAO.EliminarAsync(alumno);
         _logger.LogInformation($"Alumno eliminado con la id {alumno.IdAlumno}");

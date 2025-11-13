@@ -25,6 +25,8 @@ public class InstructorValidaciones
     public async Task<Instructor> VerificarActualizacionDeInstructorAsync(HttpContext httpContext, int idInstructor, ActualizarInstructorDTO instructorDto)
     {
         var idInstructorContexto = int.Parse(httpContext.User.FindFirst("idUsuario")!.Value);
+        verificarId(idInstructorContexto, "Token");
+        verificarId(idInstructor, "Instructor");
         verificarIgualdadId(idInstructor, idInstructorContexto);
         verificarParametrosInstructorActualizacion(instructorDto);
         await verificarInstructorNombreActualizacionAsync(instructorDto.NombreUsuario, idInstructor);
@@ -35,15 +37,15 @@ public class InstructorValidaciones
     public async Task<Instructor> VerificarEliminacionDeInstructorAsync(HttpContext httpContext, int idInstructor)
     {
         var idInstructorContexto = int.Parse(httpContext.User.FindFirst("idUsuario")!.Value);
-        verificarIdValida(idInstructorContexto, "Token");
-        verificarIdValida(idInstructor, "Instructor");
+        verificarId(idInstructorContexto, "Token");
+        verificarId(idInstructor, "Instructor");
         verificarIgualdadId(idInstructor, idInstructorContexto);
         return await verificarExistenciaInstructorAsync(idInstructor);
     }
 
     public async Task<Instructor> VerificarObtencionDeInstructorAsync(int idInstructor)
     {
-        verificarIdValida(idInstructor, "Instructor");
+        verificarId(idInstructor, "Instructor");
         return await verificarExistenciaInstructorAsync(idInstructor);
     }
 
@@ -51,8 +53,8 @@ public class InstructorValidaciones
     {
         verificarParametrosCambiarContrasenia(cambiarContraseniaDTO);
         var idInstructorContexto = int.Parse(httpContext.User.FindFirst("idUsuario")!.Value);
-        verificarIdValida(idInstructorContexto, "Token");
-        verificarIdValida(idInstructor, "Instructor");
+        verificarId(idInstructorContexto, "Token");
+        verificarId(idInstructor, "Instructor");
         verificarIgualdadId(idInstructor, idInstructorContexto);
         var instructor = await verificarExistenciaInstructorAsync(idInstructor);
         verificarContraseniaActual(instructor, cambiarContraseniaDTO.ContraseniaActual);
@@ -60,7 +62,7 @@ public class InstructorValidaciones
         return instructor;
     }
     
-    private void verificarIdValida(int id, string actor)
+    private void verificarId(int id, string actor)
     {
         if (id <= 0)
         {
