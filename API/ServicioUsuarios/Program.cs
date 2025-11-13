@@ -194,6 +194,28 @@ app.MapPut("/alumnos/{idAlumno}/contrasenia", async (CambiarContraseniaDTO cambi
 /*
  * ServicioInstructor
 */
+
+//Validar datos de registro de instructor
+app.MapPost("/instructores/validar", async (RegistrarInstructorDTO instructorNuevoDto, IServicioInstructor servicio) =>
+{
+    await servicio.ValidarDatosRegistroAsync(instructorNuevoDto);
+    return Results.Accepted();
+})
+.WithName("Validar registro")
+.WithTags("Instructores")
+.WithSummary("Validar datos de registro de un Instructor")
+.WithDescription(
+    "Valida los siguientes datos: " +
+    "\n - Nombre completo." +
+    "\n - Nombre usuario." +
+    "\n - Correo electrónico." +
+    "\n - Contraseña." +
+    "\n - Id del último grado profesional obtenido.")
+.Accepts<RegistrarInstructorDTO>("application/json")
+.Produces(202)
+.Produces(400)
+.Produces(409)
+.WithOpenApi();
 //Registrar instructor
 app.MapPost("/instructores", async (RegistrarInstructorDTO instructorNuevoDto, IServicioInstructor servicio) =>
 {

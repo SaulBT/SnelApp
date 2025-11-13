@@ -20,11 +20,17 @@ public class SerivicioInstructor : IServicioInstructor
         _logger = logger;
     }
 
+    public async Task ValidarDatosRegistroAsync(RegistrarInstructorDTO instructorDTO)
+    {
+        _logger.LogInformation("Validando datos de registro de Instructor");
+        await _validaciones.VerificarRegistroInstructorAsync(instructorDTO);
+        _logger.LogInformation("Datos de registro de Instructor validados correctamente");
+    }
+
     public async Task RegistrarAsync(RegistrarInstructorDTO registrarInstructorDto)
     {
         _logger.LogInformation("Registrando a Instructor");
-        await _validaciones.VerificarRegistroInstructorAsync(registrarInstructorDto);
-
+        
         var nuevoInstructor = new Instructor
         {
             NombreCompleto = registrarInstructorDto.NombreCompleto,
