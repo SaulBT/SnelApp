@@ -20,10 +20,16 @@ public class ServicioAlumno : IServicioAlumno
         _validaciones = validaciones;
     }
 
+    public async Task ValidarDatosRegistroAsync(RegistrarAlumnoDTO alumnoDTO)
+    {
+        _logger.LogInformation("Validando datos de registro de Alumno");
+        await _validaciones.VerificarRegistroDeAlumnoAsync(alumnoDTO);
+        _logger.LogInformation("Datos de registro de Alumno validados correctamente");
+    }
+
     public async Task RegistrarAsync(RegistrarAlumnoDTO registrarAlumnoDto)
     {
         _logger.LogInformation("Registrando a Alumno");
-        await _validaciones.VerificarRegistroDeAlumnoAsync(registrarAlumnoDto);
 
         var alumnoNuevo = new Alumno
         {
