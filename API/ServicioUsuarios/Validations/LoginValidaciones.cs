@@ -1,6 +1,5 @@
 using ServicioUsuarios.Data.DAOs.Interfaces;
 using ServicioUsuarios.Data.DTOs;
-using ServicioUsuarios.Data.DTOs.Alumno;
 using ServicioUsuarios.Exceptions;
 using ServicioUsuarios.Models;
 
@@ -19,28 +18,21 @@ public class LoginValidaciones
 
     public void VerificarParametrosUsuarioDto(IniciarSesionDTO iniciarSesionDto)
     {
-        if (string.IsNullOrEmpty(iniciarSesionDto.TipoUsuario) ||
-            string.IsNullOrEmpty(iniciarSesionDto.NombreUsuarioOCorreo) ||
-            string.IsNullOrEmpty(iniciarSesionDto.Contrasenia))
-        {
-            throw new ArgumentNullException("Los parámetros del usuario no pueden ser nulos.");
-        }
-
         if (string.IsNullOrEmpty(iniciarSesionDto.TipoUsuario))
         {
-            throw new CampoObligatorioException("Los parámetros del usuario no pueden ser nulos: Tipo usuarios es nulo");
+            throw new CampoObligatorioException("Tipo de usuario");
         }
-        else if (iniciarSesionDto.TipoUsuario != "alumno" && iniciarSesionDto.TipoUsuario != "docente")
+        else if (iniciarSesionDto.TipoUsuario != "alumno" && iniciarSesionDto.TipoUsuario != "instructor")
         {
-            throw new TipoUsuarioInvalidoException($"Los parámetros del usuario son inválidos: El tipo de usuario es inválido: {iniciarSesionDto.TipoUsuario}");
+            throw new TipoUsuarioInvalidoException($"El tipo de usuario es inválido: {iniciarSesionDto.TipoUsuario}");
         }
         else if (string.IsNullOrEmpty(iniciarSesionDto.NombreUsuarioOCorreo))
         {
-            throw new CampoObligatorioException("Los parámetros del usuario no pueden ser nulos: Nombre de usuario o correo es nulo");
+            throw new CampoObligatorioException("Nombre de usuario o Correo electrónico");
         }
         else if (string.IsNullOrEmpty(iniciarSesionDto.Contrasenia))
         {
-            throw new CampoObligatorioException("Los parámetros del usuario no pueden ser nulos: La constraseña es nula");
+            throw new CampoObligatorioException("Constraseña");
         }
     }
 

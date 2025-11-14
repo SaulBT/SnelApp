@@ -2,5 +2,9 @@ namespace ServicioUsuarios.Exceptions;
 
 public class RecursoYaExistenteException : Exception
 {
-    public RecursoYaExistenteException(string mensaje) : base(mensaje) { }
+    private string recurso { get; }
+    public RecursoYaExistenteException(string recurso) : base($"'{recurso}' ya está en uso.")
+    {
+        this.recurso = recurso;
+    }
 }

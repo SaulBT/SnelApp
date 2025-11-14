@@ -25,6 +25,8 @@ public class InstructorValidaciones
     public async Task<Instructor> VerificarActualizacionDeInstructorAsync(HttpContext httpContext, int idInstructor, ActualizarInstructorDTO instructorDto)
     {
         var idInstructorContexto = int.Parse(httpContext.User.FindFirst("idUsuario")!.Value);
+        verificarId(idInstructorContexto, "Token");
+        verificarId(idInstructor, "Instructor");
         verificarIgualdadId(idInstructor, idInstructorContexto);
         verificarParametrosInstructorActualizacion(instructorDto);
         await verificarInstructorNombreActualizacionAsync(instructorDto.NombreUsuario, idInstructor);
@@ -35,15 +37,15 @@ public class InstructorValidaciones
     public async Task<Instructor> VerificarEliminacionDeInstructorAsync(HttpContext httpContext, int idInstructor)
     {
         var idInstructorContexto = int.Parse(httpContext.User.FindFirst("idUsuario")!.Value);
-        verificarIdValida(idInstructor);
-        verificarIdValida(idInstructorContexto);
+        verificarId(idInstructorContexto, "Token");
+        verificarId(idInstructor, "Instructor");
         verificarIgualdadId(idInstructor, idInstructorContexto);
         return await verificarExistenciaInstructorAsync(idInstructor);
     }
 
     public async Task<Instructor> VerificarObtencionDeInstructorAsync(int idInstructor)
     {
-        verificarIdValida(idInstructor);
+        verificarId(idInstructor, "Instructor");
         return await verificarExistenciaInstructorAsync(idInstructor);
     }
 
@@ -51,8 +53,8 @@ public class InstructorValidaciones
     {
         verificarParametrosCambiarContrasenia(cambiarContraseniaDTO);
         var idInstructorContexto = int.Parse(httpContext.User.FindFirst("idUsuario")!.Value);
-        verificarIdValida(idInstructorContexto);
-        verificarIdValida(idInstructor);
+        verificarId(idInstructorContexto, "Token");
+        verificarId(idInstructor, "Instructor");
         verificarIgualdadId(idInstructor, idInstructorContexto);
         var instructor = await verificarExistenciaInstructorAsync(idInstructor);
         verificarContraseniaActual(instructor, cambiarContraseniaDTO.ContraseniaActual);
@@ -60,11 +62,11 @@ public class InstructorValidaciones
         return instructor;
     }
     
-    private void verificarIdValida(int id)
+    private void verificarId(int id, string actor)
     {
         if (id <= 0)
         {
-            throw new IdInvalidaException($"El id {id} es inválido.");
+            throw new IdInvalidaException(id, actor);
         }
     }
 
@@ -72,23 +74,23 @@ public class InstructorValidaciones
     {
         if (string.IsNullOrEmpty(instructorDto.NombreCompleto))
         {
-            throw new CampoObligatorioException("El nombre completo es nulo");
+            throw new CampoObligatorioException("Nombre completo");
         }
         else if (string.IsNullOrEmpty(instructorDto.NombreUsuario))
         {
-            throw new CampoObligatorioException("El nombre usuario es nulo");
+            throw new CampoObligatorioException("Nombre de usuario");
         }
         else if (string.IsNullOrEmpty(instructorDto.Contrasenia))
         {
-            throw new CampoObligatorioException("La contraseña es nula");
+            throw new CampoObligatorioException("Contraseña");
         }
         else if (string.IsNullOrEmpty(instructorDto.CorreoElectronico))
         {
-            throw new CampoObligatorioException("El correo electrónico es nulo");
+            throw new CampoObligatorioException("Correo electrónico");
         }
         else if (instructorDto.IdGradoProfesional <= 0)
         {
-            throw new IdInvalidaException($"La id {instructorDto.IdGradoProfesional} del grado profesional es inválida.");
+            throw new IdInvalidaException(instructorDto.IdGradoProfesional, "Grado profesional");
         }
     }
 
@@ -96,14 +98,15 @@ public class InstructorValidaciones
     {
         if (string.IsNullOrEmpty(instructorDto.NombreUsuario))
         {
-            throw new CampoObligatorioException("El nombre usuario es nulo");
+            throw new CampoObligatorioException("Nombre de usuario");
         }
         else if (string.IsNullOrEmpty(instructorDto.NombreCompleto))
         {
-            throw new CampoObligatorioException("El nombre completo es nulo");
-        } else if (instructorDto.IdGradoProfesional <= 0)
+            throw new CampoObligatorioException("Nombre completo");
+        }
+        else if (instructorDto.IdGradoProfesional <= 0)
         {
-            throw new IdInvalidaException($"La id {instructorDto.IdGradoProfesional} del grado profesional es inválida.");
+            throw new IdInvalidaException(instructorDto.IdGradoProfesional, "Grado profesional");
         }
     }
 
@@ -111,10 +114,10 @@ public class InstructorValidaciones
     {
         if (string.IsNullOrEmpty(cambiarContraseniaDto.ContraseniaActual))
         {
-            throw new CampoObligatorioException("La contraseña actual es nula.");
+            throw new CampoObligatorioException("Contraseña actual");
         } else if (string.IsNullOrEmpty(cambiarContraseniaDto.ContraseniaNueva))
         {
-            throw new CampoObligatorioException("La nueva contraseña es nula.");
+            throw new CampoObligatorioException("Contraseña nueva");
         }
     }
 
@@ -123,7 +126,7 @@ public class InstructorValidaciones
         var instructor = await _instructorDAO.ObtenerInstructorPorIdAsync(idInstructor);
         if (instructor == null)
         {
-            throw new RecursoNoEncontradoException("El instructor no existe.");
+            throw new RecursoNoEncontradoException("Instructor");
         }
 
         return instructor;
@@ -134,7 +137,7 @@ public class InstructorValidaciones
         var instructorExistente = await _instructorDAO.ObtenerInstructorPorNombreUsuarioAsync(nombreUsuario);
         if (instructorExistente != null)
         {
-            throw new RecursoYaExistenteException($"'{nombreUsuario}' ya está en uso.");
+            throw new RecursoYaExistenteException(nombreUsuario);
         }
     }
 
@@ -143,7 +146,7 @@ public class InstructorValidaciones
         var instructorExistente = await _instructorDAO.ObtenerInstructorPorNombreUsuarioEIdAsync(nombreUsuario, id);
         if (instructorExistente != null)
         {
-            throw new RecursoYaExistenteException($"'{nombreUsuario}' ya está en uso.");
+            throw new RecursoYaExistenteException(nombreUsuario);
         }
     }
 
@@ -151,7 +154,7 @@ public class InstructorValidaciones
     {
         if (id != idInstructor)
         {
-            throw new DiscordanciaDeIdException("El Id del instructor no coincide con el ID proporcionado.");
+            throw new DiscordanciaDeIdException(id, idInstructor, "Instructor");
         }
     }
 
@@ -160,7 +163,7 @@ public class InstructorValidaciones
         var instructorExistente = await _instructorDAO.ObtenerInstructorPorCorreoAsync(correo);
         if (instructorExistente != null)
         {
-            throw new RecursoYaExistenteException($"'{correo}' ya está en uso.");
+            throw new RecursoYaExistenteException(correo);
         }
     }
 

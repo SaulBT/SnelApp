@@ -22,7 +22,7 @@ builder.Services.AddDbContext<UsuariosDbContext>(options =>
 
 builder.Services.AddScoped<IServicioAlumno, ServicioAlumno>();
 builder.Services.AddScoped<IAlumnoDAO, AlumnoDAO>();
-builder.Services.AddScoped<IServicioInstructor, SerivicioInstructor>();
+builder.Services.AddScoped<IServicioInstructor, ServicioInstructor>();
 builder.Services.AddScoped<IInstructorDAO, InstructorDAO>();
 builder.Services.AddScoped<ServicioCatalogo, ServicioCatalogo>();
 builder.Services.AddScoped<IGradoEstudiosDAO, GradoEstudiosDAO>();
@@ -78,6 +78,29 @@ if (app.Environment.IsDevelopment())
 /*
  * ServicioAlumno
 */
+
+//Validar datos de registro de alumno
+app.MapPost("/alumnos/validar", async (RegistrarAlumnoDTO registrarAlumnoDto, IServicioAlumno servicio) =>
+{
+    await servicio.ValidarDatosRegistroAsync(registrarAlumnoDto);
+    return Results.Accepted();
+})
+.WithName("Validar registro Alumno")
+.WithTags("Alumnos")
+.WithSummary("Validar datos de registro de un Alumno")
+.WithDescription(
+    "Valida los siguientes datos: " +
+    "\n - Nombre completo." +
+    "\n - Nombre usuario." +
+    "\n - Correo electrónico." +
+    "\n - Contraseña." +
+    "\n - Id del último grado de estudios obtenido.")
+.Accepts<RegistrarAlumnoDTO>("application/json")
+.Produces(202)
+.Produces(400)
+.Produces(409)
+.WithOpenApi();
+
 //Registrar alumno
 app.MapPost("/alumnos", async (RegistrarAlumnoDTO alumnoNuevoDto, IServicioAlumno servicio) =>
 {
@@ -194,6 +217,28 @@ app.MapPut("/alumnos/{idAlumno}/contrasenia", async (CambiarContraseniaDTO cambi
 /*
  * ServicioInstructor
 */
+
+//Validar datos de registro de instructor
+app.MapPost("/instructores/validar", async (RegistrarInstructorDTO instructorNuevoDto, IServicioInstructor servicio) =>
+{
+    await servicio.ValidarDatosRegistroAsync(instructorNuevoDto);
+    return Results.Accepted();
+})
+.WithName("Validar registro Instructor")
+.WithTags("Instructores")
+.WithSummary("Validar datos de registro de un Instructor")
+.WithDescription(
+    "Valida los siguientes datos: " +
+    "\n - Nombre completo." +
+    "\n - Nombre usuario." +
+    "\n - Correo electrónico." +
+    "\n - Contraseña." +
+    "\n - Id del último grado profesional obtenido.")
+.Accepts<RegistrarInstructorDTO>("application/json")
+.Produces(202)
+.Produces(400)
+.Produces(409)
+.WithOpenApi();
 //Registrar instructor
 app.MapPost("/instructores", async (RegistrarInstructorDTO instructorNuevoDto, IServicioInstructor servicio) =>
 {

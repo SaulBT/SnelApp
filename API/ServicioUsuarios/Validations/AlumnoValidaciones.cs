@@ -24,26 +24,26 @@ public class AlumnoValidaciones
 
     public async Task<Alumno> VerificarActualizacionDeAlumnoAsync(HttpContext httpContext, int idAlumno, ActualizarAlumnoDTO alumnoDto)
     {
-        verificarIdUsuario(idAlumno);
         var idAlumnoContext = int.Parse(httpContext.User.FindFirst("idUsuario")!.Value);
+        verificarId(idAlumno);
         verificarIgualdadId(idAlumno, idAlumnoContext);
         verificarParametrosAlumnoActualizacion(alumnoDto);
         await verificarAlumnoNombreActualizacionAsync(alumnoDto.NombreUsuario, idAlumno);
         return await VerificarExistenciaAlumno(idAlumno);
     }
 
-    public async Task<Alumno> VerificarEliminarAlumnoAsync(HttpContext httpContext, int idAlumno)
+    public async Task<Alumno> VerificarEliminacionDeAlumnoAsync(HttpContext httpContext, int idAlumno)
     {
         var idAlumnoContext = int.Parse(httpContext.User.FindFirst("idUsuario")!.Value);
         verificarIgualdadId(idAlumnoContext, idAlumno);
-        verificarIdUsuario(idAlumno);
+        verificarId(idAlumno);
 
         return await VerificarExistenciaAlumno(idAlumno);
     }
 
     public async Task<Alumno> VerificarObtencionDeAlumnoAsync(int idAlumno)
     {
-        verificarIdUsuario(idAlumno);
+        verificarId(idAlumno);
         return await VerificarExistenciaAlumno(idAlumno);
     }
 
@@ -52,28 +52,18 @@ public class AlumnoValidaciones
         verificarParametrosCambiarContrasenia(cambiarContraseniaDto);
         var idAlumnoContext = int.Parse(httpContext.User.FindFirst("idUsuario")!.Value);
         verificarIgualdadId(idAlumnoContext, idAlumno);
-        verificarIdUsuario(idAlumno);
+        verificarId(idAlumno);
         var alumno = await VerificarExistenciaAlumno(idAlumno);
         verificarContraseniaActual(alumno, cambiarContraseniaDto.ContraseniaActual);
 
         return alumno;
     }
 
-    public async Task<Alumno> VerificarExistenciaAlumno(int idAlumno)
-    {
-        var alumnoObtenido = await _alumnoDAO.ObtenerAlumnoPorIdAsync(idAlumno);
-        if (alumnoObtenido == null)
-        {
-            throw new RecursoNoEncontradoException($"El Alumno con la id {idAlumno} no existe.");
-        }
-        return alumnoObtenido;
-    }
-
-    private void verificarIdUsuario(int idUsuario)
+    private void verificarId(int idUsuario)
     {
         if (idUsuario <= 0)
         {
-            throw new IdInvalidaException($"La id {idUsuario} del usuario no es válida");
+            throw new IdInvalidaException(idUsuario, "Alumno");
         }
     }
 
@@ -81,23 +71,23 @@ public class AlumnoValidaciones
     {
         if (string.IsNullOrEmpty(alumnoDto.NombreCompleto))
         {
-            throw new CampoObligatorioException("El nombre completo es nulo");
+            throw new CampoObligatorioException("Nombre completo");
         }
         else if (string.IsNullOrEmpty(alumnoDto.NombreUsuario))
         {
-            throw new CampoObligatorioException("El nombre usuario es nulo");
+            throw new CampoObligatorioException("Nombre de usuario");
         }
         else if (string.IsNullOrEmpty(alumnoDto.Contrasenia))
         {
-            throw new CampoObligatorioException("La contraseña es nula");
+            throw new CampoObligatorioException("Contraseña");
         }
         else if (string.IsNullOrEmpty(alumnoDto.CorreoElectronico))
         {
-            throw new CampoObligatorioException("El correo electrónico es nulo");
+            throw new CampoObligatorioException("Correo electrónico");
         }
         else if (alumnoDto.IdGradoEstudios <= 0)
         {
-            throw new IdInvalidaException($"La id {alumnoDto.IdGradoEstudios} de grado de estudios no es válida");
+            throw new IdInvalidaException(alumnoDto.IdGradoEstudios, "Grado de estudios");
         }
     }
 
@@ -105,15 +95,15 @@ public class AlumnoValidaciones
     {
         if (string.IsNullOrEmpty(alumnoDto.NombreCompleto))
         {
-            throw new CampoObligatorioException("El nombre completo es nulo");
+            throw new CampoObligatorioException("Nombre completo");
         }
         else if (string.IsNullOrEmpty(alumnoDto.NombreUsuario))
         {
-            throw new CampoObligatorioException("El nombre usuario es nulo");
+            throw new CampoObligatorioException("Nombre de usuario");
         }
         else if (alumnoDto.IdGradoEstudios <= 0)
         {
-            throw new IdInvalidaException($"La id {alumnoDto.IdGradoEstudios} de grado de estudios no es válida");
+            throw new IdInvalidaException(alumnoDto.IdGradoEstudios, "Grado de estudios");
         }
     }
 
@@ -121,12 +111,22 @@ public class AlumnoValidaciones
     {
         if (string.IsNullOrEmpty(cambiarContraseniaDto.ContraseniaNueva))
         {
-            throw new CampoObligatorioException("La contraseña nueva es nula");
+            throw new CampoObligatorioException("Contraseña nueva");
         }
         else if (string.IsNullOrEmpty(cambiarContraseniaDto.ContraseniaActual))
         {
-            throw new CampoObligatorioException("La contraseña actual es nula");
+            throw new CampoObligatorioException("Contraseña actual");
         }
+    }
+
+    public async Task<Alumno> VerificarExistenciaAlumno(int idAlumno)
+    {
+        var alumnoObtenido = await _alumnoDAO.ObtenerAlumnoPorIdAsync(idAlumno);
+        if (alumnoObtenido == null)
+        {
+            throw new RecursoNoEncontradoException("Alumno");
+        }
+        return alumnoObtenido;
     }
 
     private async Task verificarAlumnoNombreRegistroAsync(string nombreUsuario)
@@ -134,7 +134,7 @@ public class AlumnoValidaciones
         var alumnoExistente = await _alumnoDAO.ObtenerPorNombreUsuarioAsync(nombreUsuario);
         if (alumnoExistente != null)
         {
-            throw new RecursoYaExistenteException($"'{nombreUsuario}' ya está en uso.");
+            throw new RecursoYaExistenteException(nombreUsuario);
         }
     }
 
@@ -143,7 +143,7 @@ public class AlumnoValidaciones
         var alumnoExistente = await _alumnoDAO.ObtenerPorNombreUsuarioEIdAsync(nombreUsuario, id);
         if (alumnoExistente != null)
         {
-            throw new RecursoYaExistenteException($"'{nombreUsuario}' ya está en uso.");
+            throw new RecursoYaExistenteException(nombreUsuario);
         }
     }
 
@@ -151,7 +151,7 @@ public class AlumnoValidaciones
     {
         if (id != idAlumno)
         {
-            throw new DiscordanciaDeIdException("El id en la URL no coincide con la id en la solicitud.");
+            throw new DiscordanciaDeIdException(idAlumno, id, "Alumno");
         }
     }
 
@@ -160,7 +160,7 @@ public class AlumnoValidaciones
         var alumnoExistente = await _alumnoDAO.ObtenerPorCorreoAsync(correo);
         if (alumnoExistente != null)
         {
-            throw new RecursoYaExistenteException($"'{correo}' ya está en uso.");
+            throw new RecursoYaExistenteException(correo);
         }
     }
 

@@ -20,10 +20,16 @@ public class ServicioAlumno : IServicioAlumno
         _validaciones = validaciones;
     }
 
+    public async Task ValidarDatosRegistroAsync(RegistrarAlumnoDTO alumnoDTO)
+    {
+        _logger.LogInformation("Validando datos de registro de Alumno");
+        await _validaciones.VerificarRegistroDeAlumnoAsync(alumnoDTO);
+        _logger.LogInformation("Datos de registro de Alumno validados correctamente");
+    }
+
     public async Task RegistrarAsync(RegistrarAlumnoDTO registrarAlumnoDto)
     {
         _logger.LogInformation("Registrando a Alumno");
-        await _validaciones.VerificarRegistroDeAlumnoAsync(registrarAlumnoDto);
 
         var alumnoNuevo = new Alumno
         {
@@ -64,7 +70,7 @@ public class ServicioAlumno : IServicioAlumno
     public async Task EliminarAsync(HttpContext httpContext, int idAlumno)
     {
         _logger.LogInformation("Eliminando a Alumno");
-        var alumno = await _validaciones.VerificarEliminarAlumnoAsync(httpContext, idAlumno);
+        var alumno = await _validaciones.VerificarEliminacionDeAlumnoAsync(httpContext, idAlumno);
 
         await _alumnoDAO.EliminarAsync(alumno);
         _logger.LogInformation($"Alumno eliminado con la id {alumno.IdAlumno}");

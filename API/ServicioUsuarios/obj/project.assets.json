@@ -3673,11 +3673,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\SnelApp\\API\\ServicioUsuarios\\ServicioUsuarios.csproj",
+      "projectUniqueName": "c:\\SnelApp\\API\\ServicioUsuarios\\ServicioUsuarios.csproj",
       "projectName": "ServicioUsuarios",
-      "projectPath": "C:\\SnelApp\\API\\ServicioUsuarios\\ServicioUsuarios.csproj",
+      "projectPath": "c:\\SnelApp\\API\\ServicioUsuarios\\ServicioUsuarios.csproj",
       "packagesPath": "C:\\Users\\x\\.nuget\\packages\\",
-      "outputPath": "C:\\SnelApp\\API\\ServicioUsuarios\\obj\\",
+      "outputPath": "c:\\SnelApp\\API\\ServicioUsuarios\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

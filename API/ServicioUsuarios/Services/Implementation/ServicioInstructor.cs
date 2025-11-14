@@ -7,24 +7,30 @@ using ServicioUsuarios.Validations;
 
 namespace ServicioUsuarios.Services.Implementation;
 
-public class SerivicioInstructor : IServicioInstructor
+public class ServicioInstructor : IServicioInstructor
 {
     private readonly IInstructorDAO _instructorDAO;
     private readonly InstructorValidaciones _validaciones;
-    private readonly ILogger<SerivicioInstructor> _logger;
+    private readonly ILogger<ServicioInstructor> _logger;
 
-    public SerivicioInstructor(IInstructorDAO instructorDAO, InstructorValidaciones validaciones, ILogger<SerivicioInstructor> logger)
+    public ServicioInstructor(IInstructorDAO instructorDAO, InstructorValidaciones validaciones, ILogger<ServicioInstructor> logger)
     {
         _instructorDAO = instructorDAO;
         _validaciones = validaciones;
         _logger = logger;
     }
 
+    public async Task ValidarDatosRegistroAsync(RegistrarInstructorDTO instructorDTO)
+    {
+        _logger.LogInformation("Validando datos de registro de Instructor");
+        await _validaciones.VerificarRegistroInstructorAsync(instructorDTO);
+        _logger.LogInformation("Datos de registro de Instructor validados correctamente");
+    }
+
     public async Task RegistrarAsync(RegistrarInstructorDTO registrarInstructorDto)
     {
         _logger.LogInformation("Registrando a Instructor");
-        await _validaciones.VerificarRegistroInstructorAsync(registrarInstructorDto);
-
+        
         var nuevoInstructor = new Instructor
         {
             NombreCompleto = registrarInstructorDto.NombreCompleto,

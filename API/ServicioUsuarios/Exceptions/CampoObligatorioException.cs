@@ -2,5 +2,9 @@ namespace ServicioUsuarios.Exceptions;
 
 public class CampoObligatorioException : ArgumentException
 {
-    public CampoObligatorioException(string mensaje) : base(mensaje) { }
+    private string campo { get; }
+    public CampoObligatorioException(string campo) : base($"El campo '{campo}' es nulo.")
+    {
+        this.campo = campo;
+    }
 }
