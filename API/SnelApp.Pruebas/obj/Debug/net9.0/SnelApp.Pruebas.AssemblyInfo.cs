@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SnelApp.Pruebas")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ed9bb235cc5bdcbe07c4e9ed54e9e5e7b7398a11")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d726e7bb4effbd7461b96469b820910bc647ef60")]
 [assembly: System.Reflection.AssemblyProductAttribute("SnelApp.Pruebas")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SnelApp.Pruebas")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

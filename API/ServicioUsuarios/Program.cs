@@ -22,7 +22,7 @@ builder.Services.AddDbContext<UsuariosDbContext>(options =>
 
 builder.Services.AddScoped<IServicioAlumno, ServicioAlumno>();
 builder.Services.AddScoped<IAlumnoDAO, AlumnoDAO>();
-builder.Services.AddScoped<IServicioInstructor, SerivicioInstructor>();
+builder.Services.AddScoped<IServicioInstructor, ServicioInstructor>();
 builder.Services.AddScoped<IInstructorDAO, InstructorDAO>();
 builder.Services.AddScoped<ServicioCatalogo, ServicioCatalogo>();
 builder.Services.AddScoped<IGradoEstudiosDAO, GradoEstudiosDAO>();

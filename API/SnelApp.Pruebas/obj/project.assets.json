@@ -2597,8 +2597,8 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "C:\\SnelApp\\API\\ServicioUsuarios\\ServicioUsuarios.csproj": {
-              "projectPath": "C:\\SnelApp\\API\\ServicioUsuarios\\ServicioUsuarios.csproj"
+            "c:\\SnelApp\\API\\ServicioUsuarios\\ServicioUsuarios.csproj": {
+              "projectPath": "c:\\SnelApp\\API\\ServicioUsuarios\\ServicioUsuarios.csproj"
             }
           }
         }
@@ -2665,7 +2665,7 @@
       "code": "NU1603",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "ServicioUsuarios depende de Pomelo.EntityFrameworkCore.MySql (>= 9.0.0-preview.2), pero no se encontró Pomelo.EntityFrameworkCore.MySql 9.0.0-preview.2. Pomelo.EntityFrameworkCore.MySql 9.0.0-preview.2.efcore.9.0.0 se resolvió en su lugar.",
+      "message": "ServicioUsuarios depends on Pomelo.EntityFrameworkCore.MySql (>= 9.0.0-preview.2) but Pomelo.EntityFrameworkCore.MySql 9.0.0-preview.2 was not found. Pomelo.EntityFrameworkCore.MySql 9.0.0-preview.2.efcore.9.0.0 was resolved instead.",
       "libraryId": "Pomelo.EntityFrameworkCore.MySql",
       "targetGraphs": [
         "net9.0"

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "/nKxLc7Q3j0=",
+  "dgSpecHash": "/uJ3rjNBvwA=",
   "success": true,
   "projectFilePath": "C:\\SnelApp\\API\\SnelApp.Pruebas\\SnelApp.Pruebas.csproj",
   "expectedPackageFiles": [
@@ -58,7 +58,7 @@
     {
       "code": "NU1603",
       "level": "Warning",
-      "message": "ServicioUsuarios depende de Pomelo.EntityFrameworkCore.MySql (>= 9.0.0-preview.2), pero no se encontró Pomelo.EntityFrameworkCore.MySql 9.0.0-preview.2. Pomelo.EntityFrameworkCore.MySql 9.0.0-preview.2.efcore.9.0.0 se resolvió en su lugar.",
+      "message": "ServicioUsuarios depends on Pomelo.EntityFrameworkCore.MySql (>= 9.0.0-preview.2) but Pomelo.EntityFrameworkCore.MySql 9.0.0-preview.2 was not found. Pomelo.EntityFrameworkCore.MySql 9.0.0-preview.2.efcore.9.0.0 was resolved instead.",
       "projectPath": "C:\\SnelApp\\API\\SnelApp.Pruebas\\SnelApp.Pruebas.csproj",
       "warningLevel": 1,
       "filePath": "C:\\SnelApp\\API\\SnelApp.Pruebas\\SnelApp.Pruebas.csproj",
