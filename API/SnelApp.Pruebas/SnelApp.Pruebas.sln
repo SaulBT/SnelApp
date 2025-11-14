@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnelApp.Pruebas", "SnelApp.Pruebas.csproj", "{DBCBB260-C50C-A029-26C0-481E64639F5C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DBCBB260-C50C-A029-26C0-481E64639F5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBCBB260-C50C-A029-26C0-481E64639F5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBCBB260-C50C-A029-26C0-481E64639F5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBCBB260-C50C-A029-26C0-481E64639F5C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {604673A2-67F5-4335-AD79-179B7F4E3D87}
+	EndGlobalSection
+EndGlobal
