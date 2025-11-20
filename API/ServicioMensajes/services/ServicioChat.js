@@ -1,4 +1,5 @@
 const eventos = require('../events/Eventos');
+const {ValidarChat} = require('../validations/ValidacionesGenerales');
 
 async function CrearChatAsync(alumnoId, instructorId, chat) {
     
@@ -67,8 +68,7 @@ async function EnviarMensajeAsync(chatId, texto, tipoUsuario, chat) {
         { new: true }
     );
 
-    if (!resultado) 
-        throw new Error('Chat no encontrado');
+    ValidarChat(resultado, chatId);
 
     eventos.emit('MensajeEnviado', {
         chatId,

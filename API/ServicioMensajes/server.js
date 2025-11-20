@@ -6,19 +6,21 @@ require('dotenv').config();
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./configuration/SwaggerConfig');
 const { enviarMensajeTiempoReal } = require('./services/ServicioTiempoReal');
+const ManejadorErrores = require('./middlewares/ManejadorErrores');
 
 const app = express();
 app.use(express.json());
 
 app.use('/chats', require('./routes/ChatRutas'));
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use(ManejadorErrores);
 
+//===LO DEL SOCKET===
 const server = http.createServer(app);
 const io = new Server(server, {
-  cors: { origin: '*' }, // CAMBIAR
+  cors: { origin: '*' }, // CHECAR
 });
-
-// Socket.IO: conexión y join a salas - CAMBIAR
+// Socket.IO: conexión y join a salas - CHECAR
 io.on('connection', (socket) => {
   console.log('Cliente conectado', socket.id);
 
@@ -28,15 +30,15 @@ io.on('connection', (socket) => {
   });
 });
 
-// Aquí conectas eventos
+//===LOS EVENTOS===
 enviarMensajeTiempoReal(io);
 
+//===MONGODB===
 mongoose.connect(process.env.MONGODB_URI_DEVELOPMENT) // Cambia a MONGODB_URI_DEVELOPMENT si estás en desarrollo
   .then(() => console.log('Conectado a MongoDB'))
   .catch((err) => console.error('Error conectando a MongoDB:', err));
 
+//==ARRANCAR SERVER===
 server.listen(process.env.PORT_DEVELOPMENT, () => { //Cambiar a PORT_DEVELOPMENT para desarrollo
   console.log('Servidor en puerto 5002');
 });
-
-module.exports = { app, server, io };
