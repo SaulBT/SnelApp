@@ -1,0 +1,129 @@
+const express = require('express');
+const router = express.Router();
+
+const {
+    CrearChatControllerAsync,
+    CargarChatsControllerAsync,
+    CargarMensajesControllerAsync,
+    EnviarMensajeControllerAsync
+} = require('../controllers/MensajesController');
+
+/**
+ * @swagger
+ * /chats/{alumnoId}/{instructorId}:
+ *   post:
+ *     summary: Iniciar un nuevo chat con un Instructor
+ *     tags:
+ *       - Chat
+ *     parameters:
+ *       - in: path
+ *         name: alumnoId
+ *         required: true
+ *         schema:
+ *           type: int
+ *         description: ID del Alumno
+ *       - in: path
+ *         name: instructorId
+ *         required: true
+ *         schema:
+ *           type: int
+ *         description: ID del Instructor
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               tipoUsuario:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Chat creado
+ *       400:
+ *         description: Parámetros inválidos
+ */
+router.post('/:alumnoId/:instructorId', CrearChatControllerAsync);
+
+/**
+ * @swagger
+ * /chats/{usuarioId}:
+ *   get:
+ *     summary: Obtener todos los Chats de un usuario
+ *     tags:
+ *       - Chat
+ *     parameters:
+ *       - in: path
+ *         name: usuarioId
+ *         required: true
+ *         schema:
+ *           type: int
+ *         description: ID del Usuario
+ *     responses:
+ *       200:
+ *         description: Chats encontrados
+ *       400:
+ *         description: Parámetros inválidos
+ *       404:
+ *         description: No se encontraron Chats
+ */
+router.get('/:usuarioId', CargarChatsControllerAsync);
+
+/**
+ * @swagger
+ * /chats/{chatId}/mensajes:
+ *   get:
+ *     summary: Obtener los Mensajes de un Chat
+ *     tags:
+ *       - Chat
+ *     parameters:
+ *       - in: path
+ *         name: chatId
+ *         required: true
+ *         schema:
+ *           type: int
+ *         description: ID del Chat
+ *     responses:
+ *       200:
+ *         description: Mensajes encontrados
+ *       400:
+ *         description: Parámetros inválidos
+ *       404:
+ *         description: No se encontraron Mensajes
+ */
+router.get('/:chatId/mensajes', CargarMensajesControllerAsync);
+
+/**
+ * @swagger
+ * /chats/{chatId}:
+ *   put:
+ *     summary: Enviar un mensaje en un Chat.
+ *     tags:
+ *       - Chat
+ *     parameters:
+ *       - in: path
+ *         name: chatId
+ *         required: true
+ *         schema:
+ *           type: int
+ *         description: ID del Chat
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               texto:
+ *                 type: string
+ *               tipoUsuario:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Mensaje enviado
+ *       400:
+ *         description: Parámetros inválidos
+ */
+router.put('/:chatId', EnviarMensajeControllerAsync);
+
+module.exports = router;

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const MensajeSchema = new mongoose.Schema({
     Texto: String,
@@ -7,15 +8,28 @@ const MensajeSchema = new mongoose.Schema({
         default: Date.now,
         required: true
     },
-    Emisor: Number
+    TipoUsuario: {
+        type: String,
+        enum: ['alumno', 'instructor'],
+        required:true
+    },
 })
 
 const ChatSchema = new mongoose.Schema({
-    Alumno: Number,
-    Instructor: Number,
+    ChatId: {
+        type: Number,
+        unique: true,
+    },
+    AlumnoId: Number,
+    InstructorId: Number,
     Mensajes: {
         type: [MensajeSchema]
     }
 })
+
+ChatSchema.plugin(AutoIncrement, {
+    inc_field: 'ChatId',
+    start_seq: 1,
+});
 
 module.exports = mongoose.model('Chat', ChatSchema);
