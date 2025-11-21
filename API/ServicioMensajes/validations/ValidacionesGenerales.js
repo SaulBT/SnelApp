@@ -18,7 +18,7 @@ function ValidarTipoUsuario(tipoUsuario) {
 
 function ValidarChat(chat, idChat) {
     if (!chat) {
-        throw { statusCode: 404, mensaje: `No existe ningún chat con la if '${idChat}'.` };
+        throw { statusCode: 404, mensaje: `No existe ningún chat con la id '${idChat}'.` };
     }
 }
 
