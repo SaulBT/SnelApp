@@ -28,15 +28,6 @@ const {
  *         schema:
  *           type: int
  *         description: ID del Instructor
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               tipoUsuario:
- *                 type: string
  *     responses:
  *       201:
  *         description: Chat creado
